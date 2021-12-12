@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(Thread::class);
     }
 
-    public function asnwers() {
+    public function answers() {
         return $this->hasMany(Answer::class);
     }
 
