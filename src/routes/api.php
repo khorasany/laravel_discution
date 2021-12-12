@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V01\Auth\AuthController;
+use App\Http\Controllers\Api\V01\Channel\ChannelsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,10 +17,18 @@ use App\Http\Controllers\Api\V01\Auth\AuthController;
 */
 
 Route::prefix("v1/")->group(function () {
+
+    // Authentication Routes
     Route::prefix('/auth')->group(function () {
         Route::post("/register", [AuthController::class, "register"])->name("auth.register");
         Route::post("/login", [AuthController::class, "login"])->name("auth.login");
         Route::post("/logout", [AuthController::class, 'logout'])->name("auth.logout");
         Route::get('/user', [AuthController::class, 'user'])->name('auth.user');
+    });
+
+    // Channels Routes
+    Route::prefix('/channel')->group(function () {
+        Route::get('/all', [ChannelsController::class, 'getAllChannelsList'])->name('channel.all');
+        Route::post('/create', [ChannelsController::class, 'createNewChannel'])->name('channel.create');
     });
 });
