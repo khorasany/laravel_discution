@@ -34,4 +34,9 @@ class ChannelsControllerTest extends TestCase
 
         $response->assertStatus(201);
     }
+
+    public function test_channel_can_be_update()
+    {
+
+    }
 }

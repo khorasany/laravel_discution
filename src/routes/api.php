@@ -30,5 +30,6 @@ Route::prefix("v1/")->group(function () {
     Route::prefix('/channel')->group(function () {
         Route::get('/all', [ChannelsController::class, 'getAllChannelsList'])->name('channel.all');
         Route::post('/create', [ChannelsController::class, 'createNewChannel'])->name('channel.create');
+        Route::post('/update', [ChannelsController::class, 'editChannel'])->name('channel.update');
     });
 });

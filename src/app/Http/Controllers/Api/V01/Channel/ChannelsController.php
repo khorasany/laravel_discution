@@ -8,12 +8,14 @@ use App\Repositories\ChannelRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChannelsController extends Controller
 {
     public function getAllChannelsList()
     {
-        return response()->json(Chennel::all(), 200);
+        $allChannel = resolve(ChannelRepository::class)->all();
+        return response()->json($allChannel, Response::HTTP_OK);
     }
 
     public function createNewChannel(Request $request)
@@ -26,6 +28,24 @@ class ChannelsController extends Controller
 
         return response()->json([
             'message' => 'channel created successfully'
-        ], 201);
+        ], Response::HTTP_CREATED);
+    }
+
+    public function editChannel(Request $request)
+    {
+        $request->validate([
+            'name' => ['required'],
+            'id' => ['required']
+        ]);
+
+        if (!empty($request)) {
+            $newChannel = resolve(ChannelRepository::class)->update($request->id, $request->name);
+
+            return response()->json($newChannel, Response::HTTP_OK);
+        }
+
+        throw ValidationException::withMessages([
+            'message' => 'id & name of channel not exist'
+        ]);
     }
 }

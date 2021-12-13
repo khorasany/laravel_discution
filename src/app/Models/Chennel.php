@@ -9,6 +9,11 @@ class Chennel extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'slug',
+        'name'
+    ];
+
     public function threads() {
         return $this->hasMany(Thread::class);
     }
